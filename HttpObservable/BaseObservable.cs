@@ -31,27 +31,27 @@ namespace HttpObservable
 
 
 
-        protected async Task HandleResponseAsync<TDto>(ApiResponse<TDto>? response, IAsyncObserver<TDto> observer)
+        protected async Task HandleResponseAsync<TDto>(HttpResponseMessage? response, IAsyncObserver<TDto> observer)
         {
             if (response is null)
             {
-                var errorMessage = $"Failed to deserialize response to {typeof(ApiResponse<TDto>).GetType().Name}";
+                var errorMessage = $"Failed to deserialize response to {typeof(TDto).GetType().Name}";
 
                 await observer.OnErrorAsync(new Exception(errorMessage));
             }
-            else if (response.Succeeded)
+            else if (response.IsSuccessStatusCode)
             {
-                await observer.OnNextAsync(response.Data!);
+                var result = await response.Content.ReadFromJsonAsync<TDto>();
+                await observer.OnNextAsync(result!);
                 await observer.OnCompletedAsync();
             }
             else
             {
-                var errorMessage = response.Error!.Message;
-                var ex = new Exception(errorMessage);
+                var error = $"StatusCode:{response.StatusCode},{response.RequestMessage}";   
+                var ex = new HttpRequestException(error);
                 await observer.OnErrorAsync(ex);
             }
         }
-
       
     }
 }

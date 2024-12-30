@@ -17,7 +17,7 @@ namespace HttpObservable.Samples.Services
             _logger = logger;
         }
 
-        public IAsyncObservable<string> SigninAsync(string username, string password)
+        public IAsyncObservable<ApiResponse<string>> SigninAsync(string username, string password)
         {
             var url = "/api/v1/auth/signin"; 
             _logger.LogInformation(_http.BaseAddress + url);
@@ -25,11 +25,11 @@ namespace HttpObservable.Samples.Services
             return base.PostAsJson<string, SigninRequest>(url, request);
         }
 
-        public IAsyncObservable<PagedList<ItemDto>> GetItems()
+        public IAsyncObservable<ApiResponse<PagedList<ItemDto>>> GetItems()
         {
             var url = "/api/v1/items?page=1&pageSize=20";
 
-            return base.Get<PagedList<ItemDto>>(url);
+            return base.Get<ApiResponse<PagedList<ItemDto>>>(url);
             
         }
     }

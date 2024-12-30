@@ -12,37 +12,12 @@ namespace HttpObservable
             _http = http??throw new NullReferenceException(typeof(HttpClient).Name);
         }
 
-
-        public virtual IAsyncObservable<PagedList<TDto>> GetPagedList<TDto>(string url)
-        {
-            return CreateObservable<PagedList<TDto>>(async o =>
-            {
-                var response = await _http.GetFromJsonAsync<ApiResponse<PagedList<TDto>>>(url);
-                await HandleResponseAsync(response, o);
-                return AsyncDisposable.Create(() => ValueTask.CompletedTask);
-            });
-        }
-
-
-        public virtual IAsyncObservable<IEnumerable<TDto>> GetList<TDto>(string url)
-        {
-            return CreateObservable<IEnumerable<TDto>>(async o =>
-            {
-
-                var response = await _http.GetFromJsonAsync<ApiResponse<IEnumerable<TDto>>>(url);
-                await HandleResponseAsync(response, o);
-                return AsyncDisposable.Create(() => ValueTask.CompletedTask);
-            });
-        }
-
-
-        private IAsyncObservable<TDto> CreateRequest<TDto>(HttpRequestMessage request)
+       private IAsyncObservable<TDto> CreateRequest<TDto>(HttpRequestMessage request)
         {
             return CreateObservable<TDto>(async o =>
             {
-                var response = await _http.SendAsync(request);
-                var result = await response.Content.ReadFromJsonAsync<ApiResponse<TDto>>();
-                await HandleResponseAsync(result!, o);
+                var response = await _http.SendAsync(request);                
+                await HandleResponseAsync(response, o);
                 return AsyncDisposable.Create(() => ValueTask.CompletedTask);
             });
         }

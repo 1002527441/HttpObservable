@@ -38,15 +38,22 @@ namespace HttpObservable_Samples.Pages
             Console.WriteLine(exception.ToString());
         }
 
-        private void OnSuccess(PagedList<ItemDto> response)
+        private void OnSuccess(ApiResponse<PagedList<ItemDto>> response)
         {
-            Console.WriteLine(response.Items);
+             Console.WriteLine(response.Data);
             StateHasChanged();
         }
 
-        private void OnSuccess(string result)
+        private void OnSuccess(ApiResponse<string> result)
         {
-            token = result;
+           if (!result.Succeeded) 
+            {
+                Console.WriteLine(result.Error!.Message);
+                return;
+            }
+
+
+            token = result.Data!;
             Console.Write(result);
             StateHasChanged();
             
