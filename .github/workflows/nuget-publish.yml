@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'src/HttpObservable/**/*.csproj'
+      - 'HttpObservable/**/*.csproj'
 
 jobs:
   build-and-publish:
@@ -31,5 +31,5 @@ jobs:
     - name: Publish
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
-        PROJECT_FILE_PATH: src/HttpObservable/HttpObservable.csproj
+        PROJECT_FILE_PATH: HttpObservable/HttpObservable.csproj
         NUGET_KEY: ${{secrets.HTTPOBSERABLE_API_KEY}}
