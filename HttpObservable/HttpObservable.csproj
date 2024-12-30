@@ -4,6 +4,19 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    
+     <PackageId>HttpObservable</PackageId>     
+    <Version>1.0.1</Version>    
+    <Authors>henry.zhang</Authors>
+    <Description>A library for making HTTP requests observable.</Description>
+    <PackageProjectUrl>https://github.com/yourusername/HttpObservable</PackageProjectUrl>      
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>    
+    <PackageIcon>icon.png</PackageIcon>    
+    <PackageTags>http;observable;reactive</PackageTags>    
+    <TargetFramework>net8.0</TargetFramework>    
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
 	<ItemGroup>
