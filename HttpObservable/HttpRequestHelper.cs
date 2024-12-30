@@ -26,5 +26,30 @@ namespace HttpObservable
             return request;
         }
 
+        
+        //upload a single file
+        public static HttpContent CreateUploadFileContent(Stream fileStream, string fileName, string paramName="file")
+        {
+            var multipartContent = new MultipartFormDataContent();
+            multipartContent.Add(new StreamContent(fileStream), paramName, fileName);
+            return multipartContent;
+        }
+
+
+
+        //upload multiple files
+        public static HttpContent CreateUploadFilesContent(Stream[] fileStreams, string[] fileNames, string paramName = "files")
+        {
+            var multipartContent = new MultipartFormDataContent();
+
+            for (int i = 0; i < fileStreams.Length; i++)
+            {
+                multipartContent.Add(new StreamContent(fileStreams[i]), paramName, fileNames[i]);
+            }
+
+            return multipartContent;
+        }
+
+
     }
 }
