@@ -22,7 +22,7 @@ namespace HttpObservable.Samples.Services
             var url = "/api/v1/auth/signin"; 
             _logger.LogInformation(_http.BaseAddress + url);
             var request = new SigninRequest(username, password);
-            return base.PostAsJson<string, SigninRequest>(url, request);
+            return base.PostAsJson<ApiResponse<string>, SigninRequest>(url, request);
         }
 
         public IAsyncObservable<ApiResponse<PagedList<ItemDto>>> GetItems()
