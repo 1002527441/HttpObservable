@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace HttpObservable.Samples.Services
 {
-    public class AuthService:HttpObservable
+    public class SampleService:HttpObservable
     {
-        private readonly ILogger<AuthService> _logger;
+        private readonly ILogger<SampleService> _logger;
 
-        public AuthService(ILogger<AuthService> logger, HttpClient http):base(http)
+        public SampleService(ILogger<SampleService> logger, HttpClient http):base(http)
         {
             _logger = logger;
         }

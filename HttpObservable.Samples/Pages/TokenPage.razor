@@ -1,0 +1,45 @@
+@page "/token"
+
+@using HttpObservable.Models
+@using HttpObservable.Samples.Services
+
+@inject SampleService sampleService;
+
+<h3>TokenPage</h3>
+
+<p>@token</p>
+
+<button class="btn btn-primary" @onclick="getToken">GetToken</button>
+
+@code {
+
+    private string token = string.Empty;
+    private async void getToken(MouseEventArgs e)
+    {
+        var request = new { username = "jack.chen", password = "abcdsd23e23" };
+        await sampleService!.SigninAsync(request.username, request.password)
+            .SubscribeAsync(OnSuccess, OnError);
+
+    }
+
+    private void OnSuccess(ApiResponse<string> result)
+    {
+        if (!result.Succeeded)
+        {
+            Console.WriteLine(result.Error!.Message);
+            return;
+        }
+
+
+        token = result.Data!;
+        Console.Write(result);
+        StateHasChanged();
+
+    }
+
+    private void OnError(Exception exception)
+    {
+        var error = exception.Message;
+        Console.WriteLine(exception.ToString());
+    }
+}
