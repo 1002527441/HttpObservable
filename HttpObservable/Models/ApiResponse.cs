@@ -7,7 +7,7 @@ namespace HttpObservable.Models
         public int Code { get; set; }
         public bool Succeeded { get; set; }
         public TData? Data { get; set; }
-        public Err? Error { get; set; }
+        public ApiError? Error { get; set; }
         public long Timestamp { get; set; } = DateTime.UtcNow.Ticks;
     }
 
