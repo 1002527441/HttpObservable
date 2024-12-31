@@ -5,7 +5,7 @@ using System.Reactive.Linq;
 
 namespace HttpObservable
 {
-    public class BaseObservable
+    public abstract class BaseObservable
     {
 
         protected IAsyncObservable<T> CreateObservable<T>(Func<IAsyncObserver<T>, ValueTask<IAsyncDisposable>> observerFactory)

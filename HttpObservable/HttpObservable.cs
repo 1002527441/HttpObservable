@@ -4,7 +4,7 @@ using System.Reactive.Disposables;
 
 namespace HttpObservable
 {
-    public class HttpObservable : BaseObservable
+    public abstract class HttpObservable : BaseObservable
     {
         public readonly HttpClient _http;
         public HttpObservable(HttpClient http)
@@ -22,7 +22,7 @@ namespace HttpObservable
             });
         }
 
-        public IAsyncObservable<TDto> PostAsJson<TDto, TPayload>(string url, TPayload data)
+        public virtual IAsyncObservable<TDto> PostAsJson<TDto, TPayload>(string url, TPayload data)
         {
 
             var request = HttpRequestHelper.CreateHttpRequest(HttpMethod.Post, url, data);
@@ -30,28 +30,28 @@ namespace HttpObservable
             return CreateRequest<TDto>(request);
         }
 
-        public IAsyncObservable<TDto> PostContent<TDto>(string url, HttpContent content)
+        public virtual IAsyncObservable<TDto> PostContent<TDto>(string url, HttpContent content)
         {
             var request = HttpRequestHelper.CreateHttpRequest(HttpMethod.Post, url, content);
 
             return CreateRequest<TDto>(request);
         }
 
-        public IAsyncObservable<TDto> PutAsJson<TDto, TPayload>(string url, TPayload data)
+        public virtual IAsyncObservable<TDto> PutAsJson<TDto, TPayload>(string url, TPayload data)
         {
             var request = HttpRequestHelper.CreateHttpRequest(HttpMethod.Put, url, data);
 
             return CreateRequest<TDto>(request);
         }
 
-        public IAsyncObservable<TDto> Delete<TDto>(string url)
+        public virtual IAsyncObservable<TDto> Delete<TDto>(string url)
         {
             var request = HttpRequestHelper.CreateHttpRequest(HttpMethod.Delete, url);
 
             return CreateRequest<TDto>(request);
         }
 
-        public IAsyncObservable<TDto> Get<TDto>(string url)
+        public virtual IAsyncObservable<TDto> Get<TDto>(string url)
         {
             var request = HttpRequestHelper.CreateHttpRequest(HttpMethod.Get, url);
             return CreateRequest<TDto>(request);
