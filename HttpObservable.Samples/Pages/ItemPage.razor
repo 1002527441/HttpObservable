@@ -1,0 +1,53 @@
+@page "/items"
+
+
+@using HttpObservable.Models
+@using HttpObservable.Samples.Services
+@inject SampleService sampleService;
+
+
+<button class="btn btn-primary" @onclick="getItem">Get Item</button>
+
+@if (items!=null){
+
+    <QuickGrid Items="items.AsQueryable()" TGridItem="ItemDto">
+        <PropertyColumn Property="i => i.Number" Sortable="true" />
+        <PropertyColumn Property="i => i.Name" />
+        <PropertyColumn Property="i => i.Description" />
+    </QuickGrid>
+
+}
+
+
+
+
+
+@code {
+
+    private List<ItemDto> items { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+       
+    }
+
+    private void OnError(Exception exception)
+    {
+        var error = exception.Message;
+        Console.WriteLine(exception.ToString());
+    }
+
+    private void OnSuccess(ApiResponse<PagedList<ItemDto>> response)
+    {
+        items = response.Data!.Items;
+        StateHasChanged();
+    }
+
+    private async Task getItem()
+    {
+
+        await sampleService!.GetItems()
+             .SubscribeAsync(OnSuccess, OnError);
+
+    }
+}
