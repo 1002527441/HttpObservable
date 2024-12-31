@@ -19,7 +19,7 @@ namespace HttpObservable_Samples
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(ApiEnd.BaseUrl) });
           
           
-            builder.Services.AddScoped<AuthService>();
+            builder.Services.AddScoped<SampleService>();
 
             await builder.Build().RunAsync();
         }
