@@ -25,6 +25,8 @@ namespace HttpObservable.Samples.Services
             return base.PostAsJson<ApiResponse<string>, SigninRequest>(url, request);
         }
 
+
+
         public IAsyncObservable<ApiResponse<PagedList<ItemDto>>> GetItems()
         {
             var url = "/api/v1/items?page=1&pageSize=20";
