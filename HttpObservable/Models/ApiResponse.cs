@@ -1,6 +1,4 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace HttpObservable.Models
+﻿namespace HttpObservable.Models
 {
     public class ApiResponse<TData>
     {
