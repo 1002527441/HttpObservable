@@ -2,6 +2,8 @@
 using System.Net.Http.Json;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace HttpObservable
 {
@@ -48,8 +50,10 @@ namespace HttpObservable
             }
             else
             {
-                var error = $"StatusCode:{response.StatusCode},{response.RequestMessage}";   
-                var ex = new HttpRequestException(error);
+                var apiError = new ApiError();              
+                apiError.jsonData = await response.Content.ReadAsStringAsync();    
+                apiError.StatusCode = response.StatusCode;
+                var ex  = new ApiException(apiError);
                 await observer.OnErrorAsync(ex);
             }
         }
