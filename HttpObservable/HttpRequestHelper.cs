@@ -7,6 +7,12 @@ namespace HttpObservable
     {
         public static HttpRequestMessage CreateHttpRequest(HttpMethod method, string url, object? content = null)
         {
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                throw new ArgumentException("URL cannot be null or empty.", nameof(url));
+            }
+
+
             var request = new HttpRequestMessage(method, url);
 
             if (content == null) return request;

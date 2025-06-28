@@ -4,7 +4,7 @@ using System.Reactive.Disposables;
 
 namespace HttpObservable
 {
-    public abstract class HttpObservable : BaseObservable
+    public abstract class HttpObservable : BaseObservable, IHttpObservable
     {
         public readonly HttpClient _http;
         public HttpObservable(HttpClient http)
@@ -55,6 +55,21 @@ namespace HttpObservable
         {
             var request = HttpRequestHelper.CreateHttpRequest(HttpMethod.Get, url);
             return CreateRequest<TDto>(request);
+        }
+
+        public virtual IAsyncObservable<TDto> UploadFile<TDto>(string url, string filename, Stream stream) 
+        {            
+            var content = HttpRequestHelper.CreateUploadFileContent(stream, filename);
+            var request = HttpRequestHelper.CreateHttpRequest(HttpMethod.Post, url, content);
+            return CreateRequest<TDto>(request);
+        }
+
+        public virtual IAsyncObservable<IEnumerable<TDto>> UploadFiles<TDto>(string url, string[] filenames, Stream[] streams)
+        {
+            var fileName = Path.GetFileName(url);
+            var content = HttpRequestHelper.CreateUploadFilesContent(streams, filenames);
+            var request = HttpRequestHelper.CreateHttpRequest(HttpMethod.Post, url, content);
+            return CreateRequest<IEnumerable<TDto>>(request);
         }
     }
 }
